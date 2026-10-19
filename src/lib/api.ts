@@ -1,6 +1,6 @@
 // Data layer. Currently returns mock data; when VITE_API_BASE_URL is set,
 // swap each function body for a fetch to `${BASE}/...`.
-export const API_BASE = import.meta.env.VITE_API_BASE_URL as string | undefined;
+export const API_BASE = import.meta.env["VITE_API_BASE_URL"] as string | undefined;
 
 export type ClientType = "Retailer" | "Wholesaler";
 export type Client = { id: string; name: string; type: ClientType; city: string; pending: number };

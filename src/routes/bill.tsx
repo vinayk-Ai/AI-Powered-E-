@@ -28,7 +28,7 @@ const lineTotal = (l: Line) => Math.max(0, l.qty * l.rate - l.disc);
 function NewBill() {
   const { clients, products, billNo } = Route.useLoaderData();
   const { t } = useLang();
-  const [client, setClient] = useState<Client | null>(clients[0]);
+  const [client, setClient] = useState<Client | null>(clients[0] ?? null);
   const [lines, setLines] = useState<Line[]>([]);
   const [pay, setPay] = useState<Pay>("Paid");
   const [method, setMethod] = useState<Method>("UPI");
