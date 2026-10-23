@@ -24,7 +24,7 @@ export function AppShell({ children }: { children: ReactNode }) {
       <aside className="group fixed inset-y-0 left-0 z-40 hidden w-16 flex-col border-r bg-card transition-[width] duration-200 ease-out hover:w-[220px] md:flex">
         <div className="flex h-16 items-center gap-3 px-4">
           <div className="grid size-8 shrink-0 place-items-center rounded-md bg-primary font-serif text-lg text-primary-foreground">B</div>
-          <span className="font-serif text-xl opacity-0 transition-opacity duration-150 group-hover:opacity-100">Bahi</span>
+          <span className="font-serif text-xl opacity-0 transition-opacity duration-150 group-hover:opacity-100">Byield</span>
         </div>
         <nav className="mt-4 flex flex-col gap-1 px-3">
           {nav.map((n) => {
