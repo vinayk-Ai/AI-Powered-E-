@@ -10,11 +10,17 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AajRouteImport } from './routes/aaj'
 import { Route as BillRouteImport } from './routes/bill'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AajRoute = AajRouteImport.update({
+  id: '/aaj',
+  path: '/aaj',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BillRoute = BillRouteImport.update({
@@ -25,27 +31,31 @@ const BillRoute = BillRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/aaj': typeof AajRoute
   '/bill': typeof BillRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/aaj': typeof AajRoute
   '/bill': typeof BillRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/aaj': typeof AajRoute
   '/bill': typeof BillRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/bill'
+  fullPaths: '/' | '/aaj' | '/bill'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/bill'
-  id: '__root__' | '/' | '/bill'
+  to: '/' | '/aaj' | '/bill'
+  id: '__root__' | '/' | '/aaj' | '/bill'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AajRoute: typeof AajRoute
   BillRoute: typeof BillRoute
 }
 
@@ -56,6 +66,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/aaj': {
+      id: '/aaj'
+      path: '/aaj'
+      fullPath: '/aaj'
+      preLoaderRoute: typeof AajRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/bill': {
@@ -70,6 +87,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AajRoute: AajRoute,
   BillRoute: BillRoute,
 }
 export const routeTree = rootRouteImport
