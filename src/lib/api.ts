@@ -15,7 +15,7 @@ export type Bill = {
   items: { name: string; qty: number; rate: number }[]; paid: number; method: "Cash" | "UPI" | "Bank";
 };
 
-const products: Product[] = [
+let products: Product[] = [
   { id: "p1", name: "Type-C Cable 1m (Fast Charge)", sku: "CBL-TC1M", kind: "cable", stock: 240, retailRate: 149, wholesaleRate: 92 },
   { id: "p7", name: "Type-C to Type-C Cable 2m", sku: "CBL-CC2M", kind: "cable", stock: 8, retailRate: 249, wholesaleRate: 168 },
   { id: "p2", name: "Silicone Back Cover - Redmi Note 12 (Black)", sku: "CVR-RN12B", kind: "cover", stock: 64, retailRate: 199, wholesaleRate: 110 },
@@ -56,6 +56,31 @@ export async function getDashboard() {
 export async function getRecentBills(): Promise<Bill[]> { return bills; }
 export async function getClients(): Promise<Client[]> { return clients; }
 export async function getProducts(): Promise<Product[]> { return products; }
+
+export type ProductInput = Omit<Product, "id">;
+// Mock persistence: swaps for a REST call to `${API_BASE}/products` later.
+export async function saveProduct(input: ProductInput & { id?: string }): Promise<Product> {
+  if (input.id) {
+    const updated = { ...products.find((p) => p.id === input.id), ...input } as Product;
+    products = products.map((p) => (p.id === input.id ? updated : p));
+    return updated;
+  }
+  const created = { ...input, id: `p${Date.now()}` };
+  products = [created, ...products];
+  return created;
+}
+export async function deleteProduct(id: string) {
+  products = products.filter((p) => p.id !== id);
+}
+
+export type RegisterInput = { businessName: string; ownerName: string; phone: string; city: string; role: ClientType };
+// Mock registration: stores locally until the accounts API exists.
+export async function registerShop(input: RegisterInput) {
+  const saved = JSON.parse(localStorage.getItem("byield-account") ?? "[]") as RegisterInput[];
+  saved.push(input);
+  localStorage.setItem("byield-account", JSON.stringify(saved));
+  return { ok: true };
+}
 export async function nextBillNo() { return "B-1049"; }
 
 export function searchProducts(list: Product[], q: string) {
