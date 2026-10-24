@@ -10,9 +10,9 @@ import { cn } from "@/lib/utils";
 export const Route = createFileRoute("/bill")({
   head: () => ({
     meta: [
-      { title: "Naya Bill — Bahi" },
+      { title: "Naya Bill — Byield" },
       { name: "description", content: "Create a GST-ready bill in seconds with live receipt preview." },
-      { property: "og:title", content: "Naya Bill — Bahi" },
+      { property: "og:title", content: "Naya Bill — Byield" },
       { property: "og:description", content: "Create a GST-ready bill in seconds with live receipt preview." },
     ],
   }),
@@ -246,7 +246,7 @@ function Receipt({ billNo, client, lines, subtotal, discount, total }: { billNo:
         <div className="text-center">
           <p className="font-serif text-xl">{business.name}</p>
           <p className="text-xs text-muted-foreground">{business.address}</p>
-          <p className="num text-xs text-muted-foreground">GSTIN {business.gstin}</p>
+          <p className="num text-xs text-muted-foreground">GSTIN {business.gstin} · Ph {business.phone}</p>
         </div>
         <div className="num mt-5 flex justify-between border-y border-dashed py-2 text-xs text-muted-foreground">
           <span>{billNo}</span><span>{shortDate()}</span>
